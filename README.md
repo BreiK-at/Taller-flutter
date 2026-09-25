@@ -86,11 +86,3 @@ Siguiendo el esquema del taller:
    - **PR #2:** `dev` ➔ `main` (Aprobado e integrado a producción).
 
 ---
-
-## 📸 Evidencias de Ejecución
-
-Las capturas de pantalla de la aplicación y del flujo en GitHub se encuentran organizadas en `docs/screenshots/` y detalladas en el informe PDF entregable:
-1. **Estado Inicial:** Título "Hola, Flutter", datos del estudiante e imágenes en Row.
-2. **Estado Reactivo:** Cambio de título a "¡Título cambiado!" tras presionar el botón y visualización del `SnackBar` flotante.
-3. **Widgets Adicionales:** Visualización del `Container` estilizado, el widget `Stack` con gradiente y el `ListView` informativo.
-4. **Pull Requests en GitHub:** Evidencias de los PRs cerrados y fusionados hacia `dev` y `main`.
