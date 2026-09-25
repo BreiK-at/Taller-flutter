@@ -4,7 +4,7 @@ Este repositorio contiene la solución completa para el **Taller 1** de la asign
 
 ---
 
-## 👤 Datos del Estudiante
+## Datos del Estudiante
 
 * **Estudiante:** Michael Stiven Vasco Cárdenas
 * **Código:** 230231047
@@ -14,7 +14,7 @@ Este repositorio contiene la solución completa para el **Taller 1** de la asign
 
 ---
 
-## 🎯 Objetivo del Taller
+## Objetivo del Taller
 
 1. Construir una pantalla básica en Flutter aplicando el manejo del estado reactivo mutable con `StatefulWidget` y `setState()`.
 2. Aplicar buenas prácticas de control de versiones con Git, respetando la arquitectura de ramas:
@@ -25,7 +25,7 @@ Este repositorio contiene la solución completa para el **Taller 1** de la asign
 
 ---
 
-## 🛠️ Requisitos Técnicos Implementados
+## Requisitos Técnicos Implementados
 
 1. **Pantalla Principal (`HomePage`):**
    - Implementada con `StatefulWidget`.
@@ -44,7 +44,7 @@ Este repositorio contiene la solución completa para el **Taller 1** de la asign
 
 ---
 
-## 🚀 Pasos para Ejecutar el Proyecto
+## Pasos para Ejecutar el Proyecto
 
 Sigue estos pasos en tu terminal para clonar y ejecutar la aplicación en cualquier entorno (Linux, Web, Android, iOS o Windows):
 
@@ -68,7 +68,7 @@ flutter run
 
 ---
 
-## 🌿 Flujo de Ramas en Git (Git Flow)
+## Flujo de Ramas en Git (Git Flow)
 
 Siguiendo el esquema del taller:
 ```
