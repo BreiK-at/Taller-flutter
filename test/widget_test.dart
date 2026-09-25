@@ -1,30 +1,29 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:taller_flutter/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Verificación de estados en HomePage: título inicial, cambio de título y SnackBar', (WidgetTester tester) async {
+    // 1. Construir el árbol de widgets
+    await tester.pumpWidget(const TallerFlutterApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // 2. Comprobar estado inicial
+    expect(find.text('Hola, Flutter'), findsOneWidget);
+    expect(find.text('¡Título cambiado!'), findsNothing);
+    expect(find.text('Michael Stiven Vasco Cárdenas'), findsOneWidget);
+    expect(find.text('Código: 230231047'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // 3. Simular clic en el botón de alternar título
+    final botonAlternar = find.byType(ElevatedButton);
+    expect(botonAlternar, findsOneWidget);
+    await tester.tap(botonAlternar);
+    await tester.pump(); // Inicia la animación
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // 4. Comprobar que el título cambió gracias a setState()
+    expect(find.text('¡Título cambiado!'), findsOneWidget);
+    expect(find.text('Hola, Flutter'), findsNothing);
+
+    // 5. Comprobar que el SnackBar se muestra
+    expect(find.text('Título actualizado'), findsOneWidget);
   });
 }
