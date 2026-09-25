@@ -1,0 +1,7 @@
+# Indicar a GitHub Linguist que las carpetas nativas son generadas por Flutter
+android/** linguist-vendored
+ios/** linguist-vendored
+linux/** linguist-vendored
+macos/** linguist-vendored
+windows/** linguist-vendored
+web/** linguist-vendored
