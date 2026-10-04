@@ -1,96 +1,117 @@
-# Taller 1: StatefulWidget, setState y Flujo de Trabajo en Git
+# Talleres de Desarrollo Móvil en Flutter
 
-Este repositorio contiene la solución completa para el **Taller 1** de la asignatura **Electiva Profesional I**, enfocado en la construcción de interfaces reactivas en **Flutter** utilizando `StatefulWidget` y `setState()`, junto con un flujo de trabajo estructurado en **Git (Git Flow)**.
-
----
-
-## 👤 Datos del Estudiante
-
-* **Estudiante:** Michael Stiven Vasco Cárdenas
-* **Código:** 230231047
-* **Asignatura:** Electiva Profesional I
-* **Docente / Institución:** UCEVA (Unidad Central del Valle del Cauca)
-* **Rama de desarrollo del taller:** `feature/taller1`
+**Estudiante:** Michael Stiven Vasco Cárdenas  
+**Código Estudiantil:** 230231047  
+**Asignatura:** Electiva Profesional I  
+**Institución:** UCEVA (Unidad Central del Valle del Cauca)  
+**Repositorio Oficial:** https://github.com/BreiK-at/Taller-flutter  
 
 ---
 
-## 🎯 Objetivo del Taller
+## Estructura de Talleres en el Repositorio
 
-1. Construir una pantalla básica en Flutter aplicando el manejo del estado reactivo mutable con `StatefulWidget` y `setState()`.
-2. Aplicar buenas prácticas de control de versiones con Git, respetando la arquitectura de ramas:
-   - `main`: Rama de producción / estable.
-   - `dev`: Rama de desarrollo base.
-   - `feature/taller1`: Rama de características para este taller.
-3. Integrar los cambios mediante Pull Requests (`feature/taller1` ➔ `dev` y posteriormente `dev` ➔ `main`).
+El proyecto integra los talleres de la asignatura mediante una barra de navegacion principal organizada en cuatro modulos:
 
----
-
-## 🛠️ Requisitos Técnicos Implementados
-
-1. **Pantalla Principal (`HomePage`):**
-   - Implementada con `StatefulWidget`.
-   - `AppBar` con título inicial variable `"Hola, Flutter"`.
-   - `Text` centrado con el nombre completo del estudiante: **Michael Stiven Vasco Cárdenas**, código y materia.
-2. **Row con Imágenes:**
-   - `Image.network()`: Cargando el isotipo oficial de Flutter desde almacenamiento en la nube con indicadores de carga y gestión de errores.
-   - `Image.asset()`: Cargando recurso local configurado en `assets/images/flutter_logo.png` y declarado en `pubspec.yaml`.
-3. **Botón Interactivo y `setState()`:**
-   - `ElevatedButton.icon`: Alterna el título de la AppBar entre `"Hola, Flutter"` y `"¡Título cambiado!"`.
-   - Despliegue de un `SnackBar` flotante con el mensaje: **"Título actualizado"**.
-4. **Widgets Adicionales Implementados (3 widgets para enriquecer la interfaz):**
-   - **`Container`:** Diseñado con bordes redondeados (`BorderRadius`), sombra suave (`BoxShadow`), padding y márgenes decorativos.
-   - **`Stack`:** Superposición de un badge de estado activo (`Positioned`) y textos sobre un fondo con gradiente visual.
-   - **`ListView`:** Lista informativa vertical estructurada con `ListTile`, avatars circulares e iconos alusivos al taller.
+1. **Taller 1 (Widgets y Estado Base):** Demostracion de `StatefulWidget`, mutacion con `setState()`, `Row` de imagenes (Network y Asset), `SnackBar` y widgets complementarios (`Container`, `Stack`, `ListView`).
+2. **Taller 2 (Asincronia con Future):** Consumo simulado no bloqueante con `Future.delayed`, manejo de estados (*Cargando*, *Exito*, *Error*) y orden de ejecucion en consola.
+3. **Taller 2 (Cronometro con Timer):** Control temporal con `Timer.periodic`, botones de accion (*Iniciar*, *Pausar*, *Reanudar*, *Reiniciar*), formato digital y liberacion estricta de memoria en `dispose()`.
+4. **Taller 2 (Isolate para Tareas Pesadas):** Computacion intensiva CPU-bound mediante `Isolate.spawn` y comunicacion por `ReceivePort`/`SendPort` sin congelar el hilo de interfaz (UI fluida a 60 FPS).
 
 ---
 
-## 🚀 Pasos para Ejecutar el Proyecto
+## Fundamentacion Teorica: Cuando usar cada mecanismo
 
-Sigue estos pasos en tu terminal para clonar y ejecutar la aplicación en cualquier entorno (Linux, Web, Android, iOS o Windows):
+| Mecanismo | Caso de Uso Principal | Bloquea Hilo de UI? | Como Funciona Internamente |
+| :--- | :--- | :---: | :--- |
+| **`Future` y `async`/`await`** | Operaciones I/O bound (peticiones HTTP, lectura de archivos, consultas SQLite, temporizadores simples). | **No** | Envia la tarea al *Event Queue* del Event Loop de Dart. El hilo principal sigue ejecutando codigo y atiende la respuesta cuando el recurso externo finaliza. |
+| **`Timer` (`dart:async`)** | Eventos recurrentes basados en tiempo (cronometros, cuentas regresivas, sondeos periodicos, debouncing). | **No** | Agenda callbacks en el Event Loop en intervalos definidos. Requiere cancelacion explicita (`timer.cancel()`) en `dispose()` para evitar fugas de memoria. |
+| **`Isolate` (`dart:isolate`)** | Tareas CPU-bound intensivas (calculos matematicos complejos, compresion de imagenes, procesamiento de grandes volumenes de datos o cifrado). | **No** | Crea un hilo nativo independiente con su propia memoria heap separada y su propio Event Loop. La comunicacion se realiza exclusivamente por paso de mensajes (`SendPort` / `ReceivePort`). |
+
+---
+
+## Diagramas de Flujo y Arquitectura
+
+### 1. Flujo de Asincronia (Future / async / await)
+
+```
+[Usuario presiona 'Consultar']
+              │
+              ▼
+   [Estado: Cargando (Spinner)]  <───  UI activa y reactiva
+              │
+   [Future.delayed (2.5s)]       <───  Event Loop atiende evento
+              │
+     ┌────────┴────────┐
+     ▼                 ▼
+  [Exito]           [Error]
+(Muestra lista    (Captura en catch
+ de 4 registros)   y opcion Reintentar)
+```
+
+### 2. Flujo del Cronometro (Timer.periodic)
+
+```
+[Iniciar]   ───► [Timer.periodic cada 100 ms] ───► [+100 ms en cada tick]
+    │                                                      │
+[Pausar]    ───► [timer.cancel()] (Conserva tiempo)        │
+    │                                                      │
+[Reanudar]  ───► [Nuevo Timer.periodic] ───────────────────┘
+    │
+[Reiniciar] ───► [timer.cancel() + Tiempo = 00:00.0]
+    │
+[dispose()] ───► [timer?.cancel()] (Limpieza obligatoria de recursos)
+```
+
+### 3. Flujo de Tarea Pesada en Isolate (Isolate.spawn)
+
+```
+[Hilo Principal (Main Isolate)]               [Isolate Secundario (Worker)]
+             │                                               │
+             ├─── Isolate.spawn(tarea, sendPort) ───────────►│ (Inicia calculo CPU-bound:
+             │                                               │  evaluacion de 3M de numeros)
+  (UI fluida a 60 FPS:                       │
+   Rueda animada girando y clicks activos)                   │
+             │                                               │
+             │◄── SendPort.send(resultadoMap) ───────────────┤ (Cálculo finalizado)
+             │                                               │
+   [ReceivePort recibe mensaje]                              X (isolate.kill / cierre)
+             │
+   [Muestra tiempo y primos en pantalla]
+```
+
+---
+
+## Flujo de Ramas Git (Git Flow)
+
+Siguiendo las directrices del curso:
+
+```
+[main]  ◄─── Merge PR #4 ───  [dev]  ◄─── Merge PR #3 ───  [feature/taller_segundo_plano]
+```
+
+* `main`: Rama de produccion y entregas estables.
+* `dev`: Rama de desarrollo e integracion continua.
+* `feature/taller1`: Rama correspondiente al Taller 1 (Widgets).
+* `feature/taller_segundo_plano`: Rama de desarrollo del Taller 2 (Asincronia, Timer, Isolate).
+
+---
+
+## Instrucciones de Ejecucion
 
 ```bash
 # 1. Clonar el repositorio
 git clone https://github.com/BreiK-at/Taller-flutter.git
 cd Taller-flutter
 
-# 2. Cambiar a la rama del taller (si deseas revisar la rama feature)
-git checkout feature/taller1
+# 2. Cambiar a la rama de caracteristicas de segundo plano
+git checkout feature/taller_segundo_plano
 
-# 3. Obtener las dependencias de Flutter
+# 3. Descargar paquetes y dependencias
 flutter pub get
 
-# 4. Ejecutar pruebas unitarias y de widgets
+# 4. Ejecutar pruebas automatizadas
 flutter test
 
-# 5. Ejecutar la aplicación
+# 5. Ejecutar la aplicacion
 flutter run
 ```
-
----
-
-## 🌿 Flujo de Ramas en Git (Git Flow)
-
-Siguiendo el esquema del taller:
-```
-[main] ◄────── PR #2 Merge ────── [dev] ◄────── PR #1 Merge ────── [feature/taller1]
-(Producción)                     (Desarrollo)                     (Taller 1)
-```
-
-1. **Ramas Base:**
-   - `main`: Código probado y estable en producción.
-   - `dev`: Rama integradora de desarrollo.
-2. **Rama del Taller:**
-   - `feature/taller1`: Rama donde se realizaron todos los commits y desarrollos del taller.
-3. **Pull Requests:**
-   - **PR #1:** `feature/taller1` ➔ `dev` (Aprobado e integrado).
-   - **PR #2:** `dev` ➔ `main` (Aprobado e integrado a producción).
-
----
-
-## 📸 Evidencias de Ejecución
-
-Las capturas de pantalla de la aplicación y del flujo en GitHub se encuentran organizadas en `docs/screenshots/` y detalladas en el informe PDF entregable:
-1. **Estado Inicial:** Título "Hola, Flutter", datos del estudiante e imágenes en Row.
-2. **Estado Reactivo:** Cambio de título a "¡Título cambiado!" tras presionar el botón y visualización del `SnackBar` flotante.
-3. **Widgets Adicionales:** Visualización del `Container` estilizado, el widget `Stack` con gradiente y el `ListView` informativo.
-4. **Pull Requests en GitHub:** Evidencias de los PRs cerrados y fusionados hacia `dev` y `main`.
