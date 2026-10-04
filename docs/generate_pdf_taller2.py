@@ -186,7 +186,7 @@ def build_pdf(filename):
         [Paragraph("<b>Asignatura:</b>", body_style), Paragraph("Electiva Profesional I", body_style)],
         [Paragraph("<b>Docente:</b>", body_style), Paragraph("Ingeniería de Sistemas", body_style)],
         [Paragraph("<b>Repositorio GitHub:</b>", body_style), Paragraph('<font color="#EA580C"><u>https://github.com/BreiK-at/Taller-flutter</u></font>', body_style)],
-        [Paragraph("<b>Rama del Taller:</b>", body_style), Paragraph("<b>feature/taller_segundo_plano</b>", body_style)],
+        [Paragraph("<b>Rama del Taller:</b>", body_style), Paragraph("<b>feature/taller2</b>", body_style)],
         [Paragraph("<b>Fecha de Entrega:</b>", body_style), Paragraph("Octubre 2026", body_style)],
     ]
 
@@ -419,7 +419,7 @@ def build_pdf(filename):
         ],
         [
             Paragraph("<b>PR #3</b>", body_style),
-            Paragraph("<code>feature/taller_segundo_plano</code> -&gt; <code>dev</code>", body_style),
+            Paragraph("<code>feature/taller2</code> -&gt; <code>dev</code>", body_style),
             Paragraph("<font color=\"#16A34A\"><b>Merged</b></font>", body_style),
             Paragraph("Integración de módulos Future, Timer e Isolate.", body_style)
         ],

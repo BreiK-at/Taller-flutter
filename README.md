@@ -87,7 +87,7 @@ Siguiendo las directrices del curso:
 
 ```
 Taller 1: [main] ◄── PR #2 Merge ── [dev] ◄── PR #1 Merge ── [feature/taller1]
-Taller 2: [main] ◄── PR #4 Merge ── [dev] ◄── PR #3 Merge ── [feature/taller_segundo_plano]
+Taller 2: [main] ◄── PR #4 Merge ── [dev] ◄── PR #3 Merge ── [feature/taller2]
 ```
 
 1. **Ramas Base:**
@@ -95,11 +95,11 @@ Taller 2: [main] ◄── PR #4 Merge ── [dev] ◄── PR #3 Merge ──
    * `dev`: Rama base integradora de desarrollo continuo.
 2. **Ramas de Taller:**
    * `feature/taller1`: Rama de desarrollo del Taller 1 (Widgets y Reactividad).
-   * `feature/taller_segundo_plano`: Rama de desarrollo del Taller 2 (Asincronia, Timer e Isolate).
+   * `feature/taller2`: Rama de desarrollo del Taller 2 (Asincronia, Timer e Isolate).
 3. **Pull Requests:**
    * **PR #1:** `feature/taller1` -> `dev` (Taller 1 integrado).
    * **PR #2:** `dev` -> `main` (Taller 1 desplegado a produccion).
-   * **PR #3:** `feature/taller_segundo_plano` -> `dev` (Taller 2 integrado).
+   * **PR #3:** `feature/taller2` -> `dev` (Taller 2 integrado).
    * **PR #4:** `dev` -> `main` (Taller 2 desplegado a produccion).
 
 ---
@@ -111,8 +111,8 @@ Taller 2: [main] ◄── PR #4 Merge ── [dev] ◄── PR #3 Merge ──
 git clone https://github.com/BreiK-at/Taller-flutter.git
 cd Taller-flutter
 
-# 2. Cambiar a la rama de caracteristicas de segundo plano
-git checkout feature/taller_segundo_plano
+# 2. Cambiar a la rama de caracteristicas de taller 2
+git checkout feature/taller2
 
 # 3. Descargar paquetes y dependencias
 flutter pub get
