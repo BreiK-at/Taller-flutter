@@ -23,7 +23,7 @@ class _IsolateScreenState extends State<IsolateScreen> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
-    // Animación continua giratoria para evidenciar visualmente si la UI se congela o no
+    // Animacion continua giratoria para evidenciar visualmente si la UI se congela o no
     _animController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -42,7 +42,7 @@ class _IsolateScreenState extends State<IsolateScreen> with SingleTickerProvider
     });
   }
 
-  // 1. EJECUCIÓN RECOMENDADA CON ISOLATE.SPAWN (NO BLOQUEA LA UI)
+  // 1. EJECUCION RECOMENDADA CON ISOLATE.SPAWN (NO BLOQUEA LA UI)
   Future<void> _ejecutarEnSegundoPlano() async {
     setState(() {
       _calculandoIsolate = true;
@@ -52,8 +52,8 @@ class _IsolateScreenState extends State<IsolateScreen> with SingleTickerProvider
 
     final inicio = DateTime.now().toIso8601String().substring(11, 19);
     _agregarLog('[$inicio] [1. MAIN] Invocando Isolate.spawn() con ReceivePort...');
-    _agregarLog('[$inicio] [2. ISOLATE] Ejecutando cálculo CPU-bound en núcleo independiente.');
-    _agregarLog('[$inicio] [UI] Observa la rueda giratoria: ¡Gira 100% fluida!');
+    _agregarLog('[$inicio] [2. ISOLATE] Ejecutando calculo CPU-bound en nucleo independiente.');
+    _agregarLog('[$inicio] [UI] Observa la rueda giratoria: Gira 100% fluida.');
 
     try {
       final resultado = await IsolateService.ejecutarTareaEnIsolate();
@@ -61,7 +61,7 @@ class _IsolateScreenState extends State<IsolateScreen> with SingleTickerProvider
       if (!mounted) return;
 
       final fin = DateTime.now().toIso8601String().substring(11, 19);
-      _agregarLog('[$fin] [3. MAIN] Mensaje recibido vía SendPort/ReceivePort.');
+      _agregarLog('[$fin] [3. MAIN] Mensaje recibido via SendPort/ReceivePort.');
       _agregarLog('[$fin] [RESULTADO] ${resultado['primos']} primos hallados en ${resultado['tiempoMs']} ms.');
 
       setState(() {
@@ -70,21 +70,20 @@ class _IsolateScreenState extends State<IsolateScreen> with SingleTickerProvider
       });
     } catch (e) {
       if (!mounted) return;
-      _agregarLog('[ERROR] Falló la ejecución en Isolate: $e');
+      _agregarLog('[ERROR] Fallo la ejecucion en Isolate: $e');
       setState(() {
         _calculandoIsolate = false;
       });
     }
   }
 
-  // 2. EJECUCIÓN COMPARATIVA EN MAIN THREAD (BLOQUEA LA UI)
+  // 2. EJECUCION COMPARATIVA EN MAIN THREAD (BLOQUEA LA UI)
   void _ejecutarEnMainThreadDirecto() {
     setState(() {
       _calculandoMainThread = true;
       _resultadoMainThread = null;
     });
 
-    // Pequeño delay de 50ms para que la UI pinte el estado antes de congelarse
     Future.delayed(const Duration(milliseconds: 50), () {
       final resultado = IsolateService.ejecutarEnMainThread();
       if (!mounted) return;
@@ -138,7 +137,7 @@ class _IsolateScreenState extends State<IsolateScreen> with SingleTickerProvider
                         ),
                         SizedBox(height: 4),
                         Text(
-                          'Cálculo intensivo CPU-bound (evaluación de 3M de números) en hilo independiente sin congelar la UI.',
+                          'Calculo intensivo CPU-bound (evaluacion de 3M de numeros) en hilo independiente sin congelar la UI.',
                           style: TextStyle(fontSize: 12.5, color: Color(0xFF7C2D12)),
                         ),
                       ],
@@ -210,10 +209,10 @@ class _IsolateScreenState extends State<IsolateScreen> with SingleTickerProvider
                         const SizedBox(height: 4),
                         Text(
                           _calculandoIsolate
-                              ? '🟢 Isolate corriendo: ¡La animación NO se detiene!'
+                              ? 'Isolate corriendo: La animacion NO se detiene'
                               : (_calculandoMainThread
-                                  ? '🔴 Main Thread: ¡UI CONGELADA!'
-                                  : 'Giro continuo a 60 FPS (Prueba tocar el botón)'),
+                                  ? 'Main Thread: UI CONGELADA'
+                                  : 'Giro continuo a 60 FPS (Prueba tocar el boton)'),
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
@@ -227,7 +226,7 @@ class _IsolateScreenState extends State<IsolateScreen> with SingleTickerProvider
                       ],
                     ),
                   ),
-                  // Botón interactivo para probar clicks
+                  // Boton interactivo para probar clicks
                   IconButton.filledTonal(
                     onPressed: () {
                       setState(() {
@@ -238,7 +237,7 @@ class _IsolateScreenState extends State<IsolateScreen> with SingleTickerProvider
                       '$_contadorClicksPrueba',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    tooltip: 'Toca aquí durante el cálculo',
+                    tooltip: 'Toca aqui durante el calculo',
                   ),
                 ],
               ),
@@ -246,7 +245,7 @@ class _IsolateScreenState extends State<IsolateScreen> with SingleTickerProvider
 
             const SizedBox(height: 20),
 
-            // BOTÓN PRINCIPAL: Ejecutar con Isolate.spawn
+            // BOTON PRINCIPAL: Ejecutar con Isolate.spawn
             ElevatedButton.icon(
               onPressed: (_calculandoIsolate || _calculandoMainThread)
                   ? null
@@ -280,7 +279,7 @@ class _IsolateScreenState extends State<IsolateScreen> with SingleTickerProvider
 
             const SizedBox(height: 10),
 
-            // BOTÓN COMPARATIVO: Ejecutar en Main Thread (Demostración de bloqueo)
+            // BOTON COMPARATIVO: Ejecutar en Main Thread (Demostracion de bloqueo)
             OutlinedButton.icon(
               onPressed: (_calculandoIsolate || _calculandoMainThread)
                   ? null
@@ -349,7 +348,7 @@ class _IsolateScreenState extends State<IsolateScreen> with SingleTickerProvider
               const SizedBox(height: 20),
             ],
 
-            // RESULTADOS DE EJECUCIÓN
+            // RESULTADOS DE EJECUCION
             if (_resultadoIsolate != null) ...[
               Container(
                 padding: const EdgeInsets.all(18),
@@ -377,13 +376,13 @@ class _IsolateScreenState extends State<IsolateScreen> with SingleTickerProvider
                     ),
                     const SizedBox(height: 12),
                     _itemResultado(
-                      'Tiempo de Ejecución:',
+                      'Tiempo de Ejecucion:',
                       '${_resultadoIsolate!['tiempoMs']} ms (~${(_resultadoIsolate!['tiempoMs'] / 1000).toStringAsFixed(2)}s)',
                       const Color(0xFF15803D),
                     ),
                     _itemResultado(
                       'Primos Encontrados:',
-                      '${_resultadoIsolate!['primos']} números',
+                      '${_resultadoIsolate!['primos']} numeros',
                       const Color(0xFF15803D),
                     ),
                     _itemResultado(
@@ -435,7 +434,7 @@ class _IsolateScreenState extends State<IsolateScreen> with SingleTickerProvider
                     ),
                     _itemResultado(
                       'Primos Encontrados:',
-                      '${_resultadoMainThread!['primos']} números',
+                      '${_resultadoMainThread!['primos']} numeros',
                       const Color(0xFF991B1B),
                     ),
                   ],

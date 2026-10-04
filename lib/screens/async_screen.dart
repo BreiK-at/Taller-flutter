@@ -31,16 +31,16 @@ class _AsyncScreenState extends State<AsyncScreen> {
 
     final inicio = DateTime.now().toIso8601String().substring(11, 19);
     _agregarLog('[$inicio] [1. ANTES] Solicitando datos con Future...');
-    _agregarLog('[$inicio] [2. DURANTE] Esperando 2.5s con await (UI no congelada)...');
+    _agregarLog('[$inicio] [2. DURANTE] Esperando 2.5s con await (UI activa)...');
 
     try {
-      // Invocación asíncrona no bloqueante
+      // Invocacion asincrona no bloqueante
       final resultado = await DataService.consultarTareasRemotas(forzarError: simularError);
 
       if (!mounted) return;
 
       final fin = DateTime.now().toIso8601String().substring(11, 19);
-      _agregarLog('[$fin] [3. DESPUÉS] Datos recibidos con éxito: ${resultado.length} items.');
+      _agregarLog('[$fin] [3. DESPUES] Datos recibidos con exito: ${resultado.length} registros.');
 
       setState(() {
         _tareas = resultado;
@@ -50,7 +50,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
       if (!mounted) return;
 
       final fin = DateTime.now().toIso8601String().substring(11, 19);
-      _agregarLog('[$fin] [3. DESPUÉS] Excepción capturada: ${e.toString()}');
+      _agregarLog('[$fin] [3. DESPUES] Excepcion capturada: ${e.toString()}');
 
       setState(() {
         _mensajeError = e.toString().replaceAll('Exception: ', '');
@@ -63,7 +63,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Asincronía (Future / await)'),
+        title: const Text('Asincronia (Future / await)'),
         backgroundColor: const Color(0xFFEA580C),
         foregroundColor: Colors.white,
       ),
@@ -72,7 +72,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Tarjeta explicativa con acento cálido
+            // Tarjeta explicativa con acento calido
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -121,7 +121,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
 
             const SizedBox(height: 20),
 
-            // Botones de acción
+            // Botones de accion
             Row(
               children: [
                 Expanded(
@@ -130,7 +130,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
                         ? null
                         : () => _ejecutarConsulta(simularError: false),
                     icon: const Icon(Icons.cloud_download),
-                    label: const Text('Consultar (Éxito)'),
+                    label: const Text('Consultar (Exito)'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFEA580C),
                       foregroundColor: Colors.white,
@@ -169,7 +169,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1C1917), // Fondo negro cálido / piedra
+                  color: const Color(0xFF1C1917),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: const Color(0xFF44403C)),
                 ),
@@ -181,7 +181,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
                         Icon(Icons.terminal, color: Color(0xFFFB923C), size: 18),
                         SizedBox(width: 8),
                         Text(
-                          'Trazabilidad en Consola (Orden de ejecución):',
+                          'Trazabilidad en Consola (Orden de ejecucion):',
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -209,7 +209,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
               const SizedBox(height: 22),
             ],
 
-            // Contenedor dinámico según el estado
+            // Contenedor dinamico segun el estado
             _construirContenidoEstado(),
           ],
         ),
@@ -232,7 +232,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
               Icon(Icons.touch_app_outlined, size: 54, color: Colors.orange.shade300),
               const SizedBox(height: 12),
               const Text(
-                'Presiona "Consultar (Éxito)" o "Simular Error"',
+                'Presiona "Consultar (Exito)" o "Simular Error"',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15,
@@ -242,7 +242,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
               ),
               const SizedBox(height: 6),
               const Text(
-                'Observa cómo la interfaz reacciona con Future y async/await.',
+                'Observa como la interfaz reacciona con Future y async/await.',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 12, color: Color(0xFF78716C)),
               ),
@@ -286,7 +286,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
               ),
               const SizedBox(height: 6),
               const Text(
-                'Esperando resolución de Future.delayed (2.5 s)...',
+                'Esperando resolucion de Future.delayed (2.5 s)...',
                 style: TextStyle(fontSize: 13, color: Color(0xFF78716C)),
               ),
             ],
@@ -306,7 +306,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
               const Icon(Icons.error_outline, size: 52, color: Color(0xFFDC2626)),
               const SizedBox(height: 12),
               const Text(
-                '¡Ocurrió un error en la consulta!',
+                'Ocurrio un error en la consulta',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -359,7 +359,7 @@ class _AsyncScreenState extends State<AsyncScreen> {
                     border: Border.all(color: const Color(0xFF86EFAC)),
                   ),
                   child: const Text(
-                    'Estado: Éxito',
+                    'Estado: Exito',
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,

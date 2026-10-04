@@ -38,7 +38,7 @@ class TallerFlutterApp extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           elevation: 2,
           color: Colors.white,
           shape: RoundedRectangleBorder(

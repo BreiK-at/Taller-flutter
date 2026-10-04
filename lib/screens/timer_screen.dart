@@ -9,10 +9,10 @@ class TimerScreen extends StatefulWidget {
 }
 
 class _TimerScreenState extends State<TimerScreen> {
-  // Instancia de Timer para el cronómetro
+  // Instancia de Timer para el cronometro
   Timer? _timer;
 
-  // Estado del cronómetro en milisegundos
+  // Estado del cronometro en milisegundos
   int _milisegundos = 0;
   bool _estaCorriendo = false;
   bool _estaPausado = false;
@@ -24,21 +24,21 @@ class _TimerScreenState extends State<TimerScreen> {
     // LIMPIEZA DE RECURSOS (Requisito obligatorio):
     // Cancelar el Timer activo cuando el widget se destruye para evitar memory leaks
     _timer?.cancel();
-    debugPrint('🧹 [TimerScreen] dispose(): Timer cancelado y recursos liberados correctamente.');
+    debugPrint('[TIMER] dispose(): Timer cancelado y recursos liberados correctamente.');
     super.dispose();
   }
 
-  // 1. INICIAR CRONÓMETRO
+  // 1. INICIAR CRONOMETRO
   void _iniciarTimer() {
-    _timer?.cancel(); // Cancelar cualquier timer remanente
+    _timer?.cancel();
     setState(() {
       _estaCorriendo = true;
       _estaPausado = false;
     });
 
-    debugPrint('▶️ [Timer] Cronómetro INICIADO.');
+    debugPrint('[TIMER] Cronometro INICIADO.');
 
-    // Actualización periódica cada 100 milisegundos para alta precisión
+    // Actualizacion periodica cada 100 milisegundos para alta precision
     _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       setState(() {
         _milisegundos += 100;
@@ -46,26 +46,26 @@ class _TimerScreenState extends State<TimerScreen> {
     });
   }
 
-  // 2. PAUSAR CRONÓMETRO
+  // 2. PAUSAR CRONOMETRO
   void _pausarTimer() {
     if (_timer != null && _timer!.isActive) {
-      _timer!.cancel(); // Detener el flujo del timer
+      _timer!.cancel();
       setState(() {
         _estaCorriendo = false;
         _estaPausado = true;
       });
-      debugPrint('⏸️ [Timer] Cronómetro PAUSADO en: ${_formatearTiempo(_milisegundos)}');
+      debugPrint('[TIMER] Cronometro PAUSADO en: ${_formatearTiempo(_milisegundos)}');
     }
   }
 
-  // 3. REANUDAR CRONÓMETRO
+  // 3. REANUDAR CRONOMETRO
   void _reanudarTimer() {
     setState(() {
       _estaCorriendo = true;
       _estaPausado = false;
     });
 
-    debugPrint('⏯️ [Timer] Cronómetro REANUDADO.');
+    debugPrint('[TIMER] Cronometro REANUDADO.');
 
     _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       setState(() {
@@ -74,7 +74,7 @@ class _TimerScreenState extends State<TimerScreen> {
     });
   }
 
-  // 4. REINICIAR CRONÓMETRO
+  // 4. REINICIAR CRONOMETRO
   void _reiniciarTimer() {
     _timer?.cancel();
     setState(() {
@@ -83,7 +83,7 @@ class _TimerScreenState extends State<TimerScreen> {
       _estaPausado = false;
       _vueltas.clear();
     });
-    debugPrint('🔄 [Timer] Cronómetro REINICIADO a 00:00.0.');
+    debugPrint('[TIMER] Cronometro REINICIADO a 00:00.0.');
   }
 
   // Registro de vuelta / lap
@@ -95,7 +95,7 @@ class _TimerScreenState extends State<TimerScreen> {
     }
   }
 
-  // Función de formateo: MM:SS.d
+  // Funcion de formateo: MM:SS.d
   String _formatearTiempo(int totalMs) {
     final int minutos = (totalMs ~/ 60000);
     final int segundos = ((totalMs % 60000) ~/ 1000);
@@ -111,7 +111,7 @@ class _TimerScreenState extends State<TimerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cronómetro con Timer'),
+        title: const Text('Cronometro con Timer'),
         backgroundColor: const Color(0xFFEA580C),
         foregroundColor: Colors.white,
       ),
@@ -162,13 +162,13 @@ class _TimerScreenState extends State<TimerScreen> {
 
             const SizedBox(height: 24),
 
-            // MARCADOR DIGITAL GRANDE (ESTILO DISPLAY ÁMBAR RETRO-MODERNO)
+            // MARCADOR DIGITAL GRANDE (ESTILO DISPLAY AMBAR RETRO-MODERNO)
             Container(
               padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
               decoration: BoxDecoration(
-                color: const Color(0xFF1C1917), // Fondo negro carbón
+                color: const Color(0xFF1C1917), // Fondo negro carbon
                 borderRadius: BorderRadius.circular(22),
-                border: Border.all(color: const Color(0xFFF97316), width: 2), // Borde ámbar brillante
+                border: Border.all(color: const Color(0xFFF97316), width: 2), // Borde ambar brillante
                 boxShadow: [
                   BoxShadow(
                     color: const Color(0xFFEA580C).withAlpha(50),
@@ -217,12 +217,12 @@ class _TimerScreenState extends State<TimerScreen> {
                       fontSize: 56,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 2,
-                      color: Color(0xFFFB923C), // Naranja neón / ámbar
+                      color: Color(0xFFFB923C), // Naranja neon / ambar
                     ),
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'MINUTOS : SEGUNDOS . DÉCIMAS',
+                    'MINUTOS : SEGUNDOS . DECIMAS',
                     style: TextStyle(
                       fontFamily: 'monospace',
                       fontSize: 10,
@@ -243,7 +243,7 @@ class _TimerScreenState extends State<TimerScreen> {
               runSpacing: 10,
               alignment: WrapAlignment.center,
               children: [
-                // Botón Iniciar (visible solo cuando está inactivo)
+                // Boton Iniciar (visible solo cuando esta inactivo)
                 if (!_estaCorriendo && !_estaPausado)
                   ElevatedButton.icon(
                     onPressed: _iniciarTimer,
@@ -259,14 +259,14 @@ class _TimerScreenState extends State<TimerScreen> {
                     ),
                   ),
 
-                // Botón Pausar (visible cuando está corriendo)
+                // Boton Pausar (visible cuando esta corriendo)
                 if (_estaCorriendo)
                   ElevatedButton.icon(
                     onPressed: _pausarTimer,
                     icon: const Icon(Icons.pause),
                     label: const Text('Pausar'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFD97706), // Ámbar oscuro
+                      backgroundColor: const Color(0xFFD97706), // Ambar oscuro
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                       shape: RoundedRectangleBorder(
@@ -275,14 +275,14 @@ class _TimerScreenState extends State<TimerScreen> {
                     ),
                   ),
 
-                // Botón Reanudar (visible cuando está pausado)
+                // Boton Reanudar (visible cuando esta pausado)
                 if (_estaPausado)
                   ElevatedButton.icon(
                     onPressed: _reanudarTimer,
                     icon: const Icon(Icons.play_arrow),
                     label: const Text('Reanudar'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF0D9488), // Verde azulado
+                      backgroundColor: const Color(0xFF0D9488),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                       shape: RoundedRectangleBorder(
@@ -291,7 +291,7 @@ class _TimerScreenState extends State<TimerScreen> {
                     ),
                   ),
 
-                // Botón Vuelta / Lap (disponible si está corriendo)
+                // Boton Vuelta / Lap (disponible si esta corriendo)
                 if (_estaCorriendo)
                   OutlinedButton.icon(
                     onPressed: _registrarVuelta,
@@ -307,7 +307,7 @@ class _TimerScreenState extends State<TimerScreen> {
                     ),
                   ),
 
-                // Botón Reiniciar
+                // Boton Reiniciar
                 ElevatedButton.icon(
                   onPressed: (_milisegundos > 0 || _estaCorriendo || _estaPausado)
                       ? _reiniciarTimer
