@@ -72,7 +72,7 @@ El proyecto integra los talleres de la asignatura mediante una barra de navegaci
   (UI fluida a 60 FPS:                       │
    Rueda animada girando y clicks activos)                   │
              │                                               │
-             │◄── SendPort.send(resultadoMap) ───────────────┤ (Cálculo finalizado)
+             │◄── SendPort.send(resultadoMap) ───────────────┤ (Calculo finalizado)
              │                                               │
    [ReceivePort recibe mensaje]                              X (isolate.kill / cierre)
              │
@@ -86,13 +86,21 @@ El proyecto integra los talleres de la asignatura mediante una barra de navegaci
 Siguiendo las directrices del curso:
 
 ```
-[main]  ◄─── Merge PR #4 ───  [dev]  ◄─── Merge PR #3 ───  [feature/taller_segundo_plano]
+Taller 1: [main] ◄── PR #2 Merge ── [dev] ◄── PR #1 Merge ── [feature/taller1]
+Taller 2: [main] ◄── PR #4 Merge ── [dev] ◄── PR #3 Merge ── [feature/taller_segundo_plano]
 ```
 
-* `main`: Rama de produccion y entregas estables.
-* `dev`: Rama de desarrollo e integracion continua.
-* `feature/taller1`: Rama correspondiente al Taller 1 (Widgets).
-* `feature/taller_segundo_plano`: Rama de desarrollo del Taller 2 (Asincronia, Timer, Isolate).
+1. **Ramas Base:**
+   * `main`: Codigo probado y estable en produccion.
+   * `dev`: Rama base integradora de desarrollo continuo.
+2. **Ramas de Taller:**
+   * `feature/taller1`: Rama de desarrollo del Taller 1 (Widgets y Reactividad).
+   * `feature/taller_segundo_plano`: Rama de desarrollo del Taller 2 (Asincronia, Timer e Isolate).
+3. **Pull Requests:**
+   * **PR #1:** `feature/taller1` -> `dev` (Taller 1 integrado).
+   * **PR #2:** `dev` -> `main` (Taller 1 desplegado a produccion).
+   * **PR #3:** `feature/taller_segundo_plano` -> `dev` (Taller 2 integrado).
+   * **PR #4:** `dev` -> `main` (Taller 2 desplegado a produccion).
 
 ---
 
@@ -112,6 +120,6 @@ flutter pub get
 # 4. Ejecutar pruebas automatizadas
 flutter test
 
-# 5. Ejecutar la aplicacion
-flutter run
+# 5. Ejecutar la aplicacion en Linux
+flutter run -d linux
 ```
