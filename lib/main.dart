@@ -95,33 +95,64 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         index: _currentIndex,
         children: _screens,
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.widgets_outlined),
-            selectedIcon: Icon(Icons.widgets, color: Color(0xFFC2410C)),
-            label: 'Taller 1',
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: double.infinity,
+            color: const Color(0xFFFFF7ED),
+            padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Michael Vasco - 230231047',
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Color(0xFF9A3412),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  'v1.0.1 (Build 2)',
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Color(0xFFC2410C),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
           ),
-          NavigationDestination(
-            icon: Icon(Icons.bolt_outlined),
-            selectedIcon: Icon(Icons.bolt, color: Color(0xFFC2410C)),
-            label: 'Asincronía',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.timer_outlined),
-            selectedIcon: Icon(Icons.timer, color: Color(0xFFC2410C)),
-            label: 'Cronómetro',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.precision_manufacturing_outlined),
-            selectedIcon: Icon(Icons.precision_manufacturing, color: Color(0xFFC2410C)),
-            label: 'Isolate',
+          NavigationBar(
+            selectedIndex: _currentIndex,
+            onDestinationSelected: (int index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Icons.widgets_outlined),
+                selectedIcon: Icon(Icons.widgets, color: Color(0xFFC2410C)),
+                label: 'Taller 1',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.bolt_outlined),
+                selectedIcon: Icon(Icons.bolt, color: Color(0xFFC2410C)),
+                label: 'Asincronía',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.timer_outlined),
+                selectedIcon: Icon(Icons.timer, color: Color(0xFFC2410C)),
+                label: 'Cronómetro',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.precision_manufacturing_outlined),
+                selectedIcon: Icon(Icons.precision_manufacturing, color: Color(0xFFC2410C)),
+                label: 'Isolate',
+              ),
+            ],
           ),
         ],
       ),

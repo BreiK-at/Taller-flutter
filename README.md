@@ -111,15 +111,102 @@ Taller 2: [main] ◄── PR #4 Merge ── [dev] ◄── PR #3 Merge ──
 git clone https://github.com/BreiK-at/Taller-flutter.git
 cd Taller-flutter
 
-# 2. Cambiar a la rama de caracteristicas de taller 2
-git checkout feature/taller2
+# 2. Cambiar a la rama de distribucion
+git checkout feature/app_distribution
 
 # 3. Descargar paquetes y dependencias
 flutter pub get
 
-# 4. Ejecutar pruebas automatizadas
-flutter test
+# 4. Compilar APK en modo release
+flutter build apk --release
 
-# 5. Ejecutar la aplicacion en Linux
+# 5. Ejecutar la aplicacion localmente en Linux
 flutter run -d linux
 ```
+
+---
+
+## Distribucion y Pruebas con Firebase App Distribution
+
+### 1. Flujo de Trabajo
+```
+[Generar APK Release]
+         │  (flutter build apk --release)
+         ▼
+[Firebase App Distribution]
+         │  (Subir app-release.apk a la consola)
+         ▼
+[Grupo de Testers: QA_Clase]
+         │  (Asignar dduran@uceva.edu.co y tester local)
+         ▼
+[Instalacion en Dispositivo]
+         │  (Instalacion inicial v1.0.0 via enlace / App Tester)
+         ▼
+[Actualizacion Incremental]
+         │  (Compilar v1.0.1+2, subir release y actualizar en el dispositivo)
+         ▼
+[Cierre de QA y Evidencias]
+```
+
+### 2. Seccion de Publicacion y Replicacion
+
+Para replicar el proceso de distribucion dentro del equipo de desarrollo:
+
+1. **Permisos y Manifiesto Android:**
+   Asegurar los permisos de red en `android/app/src/main/AndroidManifest.xml`:
+   ```xml
+   <uses-permission android:name="android.permission.INTERNET"/>
+   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+   ```
+2. **Registro de la aplicacion en Firebase Console:**
+   * Crear proyecto en [Firebase Console](https://console.firebase.google.com).
+   * Registrar app Android utilizando el `applicationId` configurado en `android/app/build.gradle.kts`: `com.breikat.taller_flutter`.
+3. **Configuracion de Testers y Grupos:**
+   * Ingresar a **App Distribution** > pestana **Testers y grupos**.
+   * Crear el grupo `QA_Clase`.
+   * Agregar los correos evaluadores: `dduran@uceva.edu.co` y el correo del desarrollador/tester.
+4. **Carga y Distribucion de Releases:**
+   * Ir a la pestana **Releases** y arrastrar el archivo `build/app/outputs/flutter-apk/app-release.apk`.
+   * Redactar las Release Notes correspondientes.
+   * Asignar el release al grupo `QA_Clase` y presionar **Distribuir a 1 grupo**.
+
+---
+
+### 3. Esquema de Versionado y Release Notes
+
+Se utiliza versionamiento semantico `MAJOR.MINOR.PATCH+BUILD_NUMBER` en `pubspec.yaml`:
+
+| Version | Build Code | Tipo de Release | Descripcion de Cambios |
+| :---: | :---: | :--- | :--- |
+| **`1.0.0`** | `1` | Release Inicial | Version base con modulos de Widgets (Taller 1), Asincronia (Taller 2), Cronometro (Taller 3) e Isolate (Taller 4). Permisos de red configurados. |
+| **`1.0.1`** | `2` | Actualizacion Incremental | Optimizacion de empaquetado, badge visual de version en barra inferior e integracion de comprobacion de ciclo de vida QA. |
+
+#### Formato estandar de Release Notes utilizado:
+```text
+Versión [X.Y.Z] (Build [N]) - [Fecha]
+- Módulos / Cambios principales incluidos.
+- Correcciones o adiciones de configuración.
+- Responsable: Michael Vasco (230231047).
+- Entorno de prueba: Android 10+ / QA_Clase.
+```
+
+---
+
+### 4. Bitacora de QA (Aseguramiento de Calidad)
+
+| Version | Fecha | Cambios Realizados | Incidencia Identificada | Resolucion Aplicada | Estado Final |
+| :---: | :---: | :--- | :--- | :--- | :---: |
+| **v1.0.0 (1)** | 02/11/2026 | Empaquetado release inicial de la suite completa de talleres. | Omision inicial de permisos `INTERNET` en el manifiesto Android. | Se agregaron permisos `INTERNET` y `ACCESS_NETWORK_STATE` en `AndroidManifest.xml`. | **Aprobado** |
+| **v1.0.1 (2)** | 02/11/2026 | Incremento de version, barra inferior con identificador de version y compilacion release. | Necesidad de confirmacion visual in-app del salto de version. | Se anadio banner informativo con version y codigo estudiantil en la interfaz. | **Aprobado** |
+
+---
+
+### 5. Flujo GitFlow de esta Entrega
+
+```
+[main] ◄── PR #6 Merge ── [dev] ◄── PR #5 Merge ── [feature/app_distribution]
+```
+- **Rama origen:** `feature/app_distribution` (creada a partir de `dev`).
+- **PR #5:** `feature/app_distribution` -> `dev`.
+- **PR #6:** `dev` -> `main`.
+
