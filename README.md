@@ -14,8 +14,8 @@ El proyecto integra los talleres de la asignatura mediante una barra de navegaci
 
 1. **Taller 1 (Widgets y Estado Base):** Demostracion de `StatefulWidget`, mutacion con `setState()`, `Row` de imagenes (Network y Asset), `SnackBar` y widgets complementarios (`Container`, `Stack`, `ListView`).
 2. **Taller 2 (Asincronia con Future):** Consumo simulado no bloqueante con `Future.delayed`, manejo de estados (*Cargando*, *Exito*, *Error*) y orden de ejecucion en consola.
-3. **Taller 2 (Cronometro con Timer):** Control temporal con `Timer.periodic`, botones de accion (*Iniciar*, *Pausar*, *Reanudar*, *Reiniciar*), formato digital y liberacion estricta de memoria en `dispose()`.
-4. **Taller 2 (Isolate para Tareas Pesadas):** Computacion intensiva CPU-bound mediante `Isolate.spawn` y comunicacion por `ReceivePort`/`SendPort` sin congelar el hilo de interfaz (UI fluida a 60 FPS).
+3. **Taller 3 (Cronometro con Timer):** Control temporal con `Timer.periodic`, botones de accion (*Iniciar*, *Pausar*, *Reanudar*, *Reiniciar*), formato digital y liberacion estricta de memoria en `dispose()`.
+4. **Taller 4 (Isolate para Tareas Pesadas):** Computacion intensiva CPU-bound mediante `Isolate.spawn` y comunicacion por `ReceivePort`/`SendPort` sin congelar el hilo de interfaz (UI fluida a 60 FPS).
 
 ---
 
